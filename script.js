@@ -1,6 +1,6 @@
 // fist we made a func of reverse and used it to make IsPallindrome func. Then we made a func to convert date into string as any palindrome is a string, not a number, and so to check if dates are palindrome, we have to make it string first. Now, the dates could be in different formats and so we have to now also check/arrange date strings in those different formats--to check if arrangement in any format is a palindrome, so we will have a func for it to cover those formats. Then we made a checkAllPalindrome func to check any palindrome in the date formats.
 
-const dateInput = document.querySelector(".bday-input");
+const dateInput = document.querySelector("#bday-input");
 const submitButton = document.querySelector(".submit-btn");
 const output = document.querySelector(".output");
 
@@ -63,9 +63,9 @@ function checkAllPalindrome(date) {
 }
 
 // let date = {
-//   day: 02,
+//   day: 30,
 //   month: 11,
-//   year: 2020,
+//   year: 2022,
 // };
 // console.log(checkAllPalindrome(date));
 
@@ -76,7 +76,6 @@ function isLeapYear(year) {
   if (year % 100 === 0) {
     return fals;
   }
-  e;
   if (year % 4 === 0) {
     return true;
   }
@@ -140,10 +139,34 @@ function nextPalindromeDate(date) {
   return [ctr, nextDate];
 }
 
-let date = {
-  day: 1,
-  month: 01,
-  year: 2020,
-};
+// let date = {
+//   day: 1,
+//   month: 01,
+//   year: 2020,
+// };
 
-console.log(nextPalindromeDate(date));
+// console.log(nextPalindromeDate(date));
+
+function clickHandler() {
+  const dateInputStr = dateInput.value;
+
+  if (dateInputStr !== "") {
+    const listOfDate = dateInputStr.split("-");
+
+    let date = {
+      day: Number(listOfDate[2]),
+      month: Number(listOfDate[1]),
+      year: Number(listOfDate[0]),
+    };
+
+    let isPalindrome = checkAllPalindrome(date);
+    if (isPalindrome) {
+      output.innerText = `Yay, your bday is a palindrome!`;
+    } else {
+      let [ctr, nextDate] = nextPalindromeDate(date);
+      output.innerText = `The next palindrome date is ${nextDate.day}-${nextDate.month}-${nextDate.year}, you missed it by ${ctr} days! 😔`;
+    }
+  }
+}
+
+submitButton.addEventListener("click", clickHandler);
